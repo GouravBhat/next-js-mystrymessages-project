@@ -118,7 +118,7 @@ const dashboard = () => {
                             type="text" readOnly value={sharelink} />
                         <button
                             onClick={() => {
-                                navigator.clipboard.writeTex(sharelink)
+                                navigator.clipboard.writeText(sharelink)
                                 
                                 toast.success('Link copied!')
                             }}
