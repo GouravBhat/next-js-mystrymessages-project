@@ -19,6 +19,7 @@ const dashboard = () => {
     const [loading, setLoading] = useState(false)
     const [loaderacceptmessages, setLoadingacceptmessages] = useState(false)
     const [DeletingId, setsetDeletingId] = useState(null)
+    const [sharelink,setShareLink]=useState('')
 
 
 
@@ -91,6 +92,12 @@ const dashboard = () => {
         }
 
     }
+    useEffect(() => {
+    if (typeof window !== "undefined" && data?.user?._id) {
+        const link = `${window.location.protocol}//${window.location.host}/sendmessages/${data.user._id}`;
+        setShareLink(link);
+    }
+}, [data]);
 
     useEffect(() => {
         getmessages()
@@ -108,15 +115,11 @@ const dashboard = () => {
                     <p className="text-gray-600 mb-2">Copy your unique link</p>
                     <div className='flex items-center gap-2 mb-6'>
                         <input className="flex-1 border border-gray-300 rounded-lg p-3 bg-gray-100 text-gray-700 focus:outline-none "
-                            type="text" readOnly value={`${window.location.protocol}//${window.location.host}/sendmessages/${data
-                                ?.user._id
-                                }`} />
+                            type="text" readOnly value={sharelink} />
                         <button
                             onClick={() => {
-                                navigator.clipboard.writeText(
-                                    `${window.location.protocol}//${window.location.host}/sendmessages/${data
-                                        ?.user._id}`
-                                )
+                                navigator.clipboard.writeTex(sharelink)
+                                
                                 toast.success('Link copied!')
                             }}
                             className="bg-gray-900 text-white px-5 py-3 rounded-lg font-semibold hover:bg-gray-800 transition duration-200"
